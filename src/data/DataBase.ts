@@ -29,7 +29,7 @@ export class DataBase extends BaseDataBase{
         .from(DataBase.USER_TABLE_NAME)
         .where({email_user});
 
-        return result
+        return result[0]
     }
 
 }

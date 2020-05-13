@@ -22,6 +22,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const userDataBase = new DataBase();
+
         const user = await userDataBase.getUserByEmail(userData.email)
 
         if(!user) {
@@ -29,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const hashManager = new HashManager();
-        const passwordValid = await hashManager.compare(userData.password, user.password)
+        const passwordValid = await hashManager.compare(userData.password, user.password_user)
 
         if (!passwordValid) {
             throw new Error("Senha invalida")
