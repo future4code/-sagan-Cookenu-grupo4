@@ -2,6 +2,7 @@ import  {Request, Response} from "express";
 import {DataBase} from "../data/DataBase";
 import {CreateId} from "../services/CreateId";
 import {Authenticator} from "../services/Authenticator";
+import { HashManager } from "../services/HashManager";
 
 
 export const signup = async (req: Request, res: Response) => {
@@ -21,8 +22,14 @@ export const signup = async (req: Request, res: Response) => {
             password: req.body.password,
         }
         const id = new CreateId().create();
-        await new DataBase().createUser(id,userData.name,userData.email,userData.password);
+
+        const hashManager = new HashManager();
+        const hashPassword = await hashManager.hash(userData.password)
+
+        await new DataBase().createUser(id, userData.name, userData.email, hashPassword);
+
         const token = await new Authenticator().generateToken({id})
+
         res.status(200).send({token: token})
     } catch (error) {
         res.status(400).send({
