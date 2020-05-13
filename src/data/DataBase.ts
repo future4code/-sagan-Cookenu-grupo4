@@ -23,4 +23,13 @@ export class DataBase extends BaseDataBase{
             .into(DataBase.USER_TABLE_NAME);
     }
 
+    public async getUserByEmail(email_user: string): Promise<any> {
+        const result = await this.getConnection()
+        .select("*")
+        .from(DataBase.USER_TABLE_NAME)
+        .where({email_user});
+
+        return result
+    }
+
 }

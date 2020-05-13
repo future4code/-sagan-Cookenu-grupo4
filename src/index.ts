@@ -7,6 +7,7 @@ import {Authenticator} from "./services/Authenticator";
 import {HashManager} from "./services/HashManager";
 import {BaseDataBase} from "./data/BaseDataBase";
 import {signup} from "./Endpoints/EndpointSignup";
+import { login } from "./Endpoints/EndpointLogin";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ const server = app.listen(process.env.PORT || 3003, () => {
 async function main(): Promise<void> {
 
     app.post("/signup", signup);
+    app.post("/login", login)
 
 }
 
