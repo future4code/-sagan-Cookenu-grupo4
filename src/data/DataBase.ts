@@ -31,5 +31,4 @@ export class DataBase extends BaseDataBase{
 
         return result[0]
     }
-
 }
