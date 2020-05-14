@@ -8,6 +8,7 @@ import {HashManager} from "./services/HashManager";
 import {BaseDataBase} from "./data/BaseDataBase";
 import {signup} from "./Endpoints/EndpointSignup";
 import { login } from "./Endpoints/EndpointLogin";
+import {getSelfProfile} from "./Endpoints/EndpointGetSelfProfile";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ async function main(): Promise<void> {
 
     app.post("/signup", signup);
     app.post("/login", login)
+    app.get("/user/profile",getSelfProfile)
 
 }
 

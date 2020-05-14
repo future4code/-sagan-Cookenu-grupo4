@@ -32,4 +32,18 @@ export class DataBase extends BaseDataBase{
         return result[0]
     }
 
+    public async getSelfProfile(
+        id_user: string,
+    ): Promise<any> {
+        const result = await this.getConnection()
+            .select("*")
+            .from(DataBase.USER_TABLE_NAME)
+            .where({id_user});
+        const user = {
+            id: result[0].id_user,
+            name: result[0].name_user,
+            email: result[0].email_user,
+        }
+        return user;
+    }
 }
