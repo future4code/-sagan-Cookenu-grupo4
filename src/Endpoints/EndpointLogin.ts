@@ -38,7 +38,7 @@ export const login = async (req: Request, res: Response) => {
 
         const authenticator = new Authenticator();
         const token = authenticator.generateToken({
-          id: user.id,
+          id: user.id_user,
         });
 
         res.status(200).send({
