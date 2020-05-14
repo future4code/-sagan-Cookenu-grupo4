@@ -32,7 +32,7 @@ export class DataBase extends BaseDataBase{
         return result[0]
     }
 
-    public async getSelfProfile(
+    public async getUserById(
         id_user: string,
     ): Promise<any> {
         const result = await this.getConnection()

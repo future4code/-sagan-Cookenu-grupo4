@@ -5,6 +5,7 @@ import {signup} from "./Endpoints/EndpointSignup";
 import { login } from "./Endpoints/EndpointLogin";
 import {getSelfProfile} from "./Endpoints/EndpointGetSelfProfile";
 import { createRecipe } from "./Endpoints/EndpointCreateRecipe";
+import {getOtherProfile} from "./Endpoints/EndpointGetOtherProfile";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ async function main(): Promise<void> {
     app.post("/signup", signup);
     app.post("/login", login)
     app.get("/user/profile",getSelfProfile)
+    app.get("/user/:id", getOtherProfile)
     app.post("/recipe", createRecipe)
 
 }

@@ -4,11 +4,14 @@ import {Authenticator} from "../services/Authenticator";
 
 
 
-export const getSelfProfile = async (req: Request, res: Response) => {
+export const getOtherProfile = async (req: Request, res: Response) => {
     try {
-        const token = req.headers.authorization as string;;
+        const token = req.headers.authorization as string;
+        const otherId = req.params.id
+
         const authData = await new Authenticator().getData(token)
-        const user = await new DataBase().getUserById(authData.id)
+
+        const user = await new DataBase().getUserById(otherId)
 
         if(!user){
             res.status(404).send({
