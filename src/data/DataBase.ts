@@ -5,6 +5,7 @@ dotenv.config();
 
 export class DataBase extends BaseDataBase{
     private static USER_TABLE_NAME = "cookenu_user";
+    private static FOLLOW_TABLE_NAME = "cookenu_user_follow";
 
 
     public async createUser(
@@ -46,5 +47,13 @@ export class DataBase extends BaseDataBase{
         }
         return user;
     }
+    public async followUser(
+        id_user_follow: string,
+        id_user_followed:string
 
+    ): Promise <void> {
+        await this.getConnection()
+            .insert({id_user_follow,id_user_followed})
+            .into(DataBase.FOLLOW_TABLE_NAME)
+    }
 }
