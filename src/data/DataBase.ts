@@ -65,12 +65,21 @@ export class DataBase extends BaseDataBase{
             SELECT * FROM ${DataBase.FOLLOW_TABLE_NAME}
             WHERE id_user_follow = "${id_user_follow}" AND id_user_followed = "${id_user_followed}";
         `)
-        
+
         if(result[0][0]) {
             return false
         }
         else{
             return true
         }
+    }
+    public async unFollowUser(
+        id_user_follow: string,
+        id_user_followed:string
+    ): Promise<void> {
+         await this.getConnection().raw(`
+            DELETE FROM ${DataBase.FOLLOW_TABLE_NAME}
+            WHERE id_user_follow = "${id_user_follow}" AND id_user_followed = "${id_user_followed}";
+        `)
     }
 }
