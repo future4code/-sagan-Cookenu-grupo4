@@ -56,4 +56,21 @@ export class DataBase extends BaseDataBase{
             .insert({id_user_follow,id_user_followed})
             .into(DataBase.FOLLOW_TABLE_NAME)
     }
+
+    public async getUserFollowStatus(
+        id_user_follow: string,
+        id_user_followed:string
+    ): Promise<boolean> {
+        const result = await this.getConnection().raw(`
+            SELECT * FROM ${DataBase.FOLLOW_TABLE_NAME}
+            WHERE id_user_follow = "${id_user_follow}" AND id_user_followed = "${id_user_followed}";
+        `)
+        
+        if(result[0][0]) {
+            return false
+        }
+        else{
+            return true
+        }
+    }
 }

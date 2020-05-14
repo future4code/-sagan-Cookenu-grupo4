@@ -12,7 +12,13 @@ export const followUser = async (req: Request, res: Response) => {
         const authData = await new Authenticator().getData(req.headers.authorization as string)
         const user = await new DataBase().getUserById(authData.id)
         const userToFollow = await new DataBase().getUserById(req.body.userToFollowId)
-        await new DataBase().followUser(user.id,userToFollow.id)
+
+        if(await new DataBase().getUserFollowStatus(user.id,userToFollow.id)){
+            await new DataBase().followUser(user.id,userToFollow.id)
+        }
+        else {
+            throw new Error("you already follow!");
+        }
 
         res.status(200).send({"message": "Followed successfully"})
     } catch (error) {
