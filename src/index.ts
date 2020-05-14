@@ -1,14 +1,11 @@
 import express, {Request, Response} from "express";
 import dotenv from "dotenv";
 import {AddressInfo} from "net";
-import {CreateId} from "./services/CreateId";
-import {DataBase} from "./data/DataBase";
-import {Authenticator} from "./services/Authenticator";
-import {HashManager} from "./services/HashManager";
-import {BaseDataBase} from "./data/BaseDataBase";
 import {signup} from "./Endpoints/EndpointSignup";
 import { login } from "./Endpoints/EndpointLogin";
+import {getSelfProfile} from "./Endpoints/EndpointGetSelfProfile";
 import { createRecipe } from "./Endpoints/EndpointCreateRecipe";
+import {getOtherProfile} from "./Endpoints/EndpointGetOtherProfile";
 
 dotenv.config();
 
@@ -28,7 +25,9 @@ const server = app.listen(process.env.PORT || 3003, () => {
 async function main(): Promise<void> {
 
     app.post("/signup", signup);
-    app.post("/login", login);
+    app.post("/login", login)
+    app.get("/user/profile",getSelfProfile)
+    app.get("/user/:id", getOtherProfile)
     app.post("/recipe", createRecipe)
 
 }
