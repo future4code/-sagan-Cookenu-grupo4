@@ -20,6 +20,17 @@ export class RecipeDataBase extends BaseDataBase {
             id_user_creator: idUser
         }).into(RecipeDataBase.USER_TABLE_NAME)
     }
+
+    public async getById(id: string): Promise<any> {
+        const result = await this.getConnection()
+        .select("*")
+        .from(RecipeDataBase.USER_TABLE_NAME)
+        .where({ id_recipe: id })
+        .first();
+
+        return result
+    }
+
 }
 
 export interface RecipeData {

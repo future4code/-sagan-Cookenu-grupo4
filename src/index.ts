@@ -9,6 +9,8 @@ import {BaseDataBase} from "./data/BaseDataBase";
 import {signup} from "./Endpoints/EndpointSignup";
 import { login } from "./Endpoints/EndpointLogin";
 import { createRecipe } from "./Endpoints/EndpointCreateRecipe";
+import { getRecipe } from "./Endpoints/EndpointGetRecipe";
+import { getFeed } from "./Endpoints/EndpointGetFeed";
 
 dotenv.config();
 
@@ -30,6 +32,9 @@ async function main(): Promise<void> {
     app.post("/signup", signup);
     app.post("/login", login);
     app.post("/recipe", createRecipe)
+
+    app.get("/recipe/:id", getRecipe)
+    app.get("/user/feed", getFeed)
 
 }
 
