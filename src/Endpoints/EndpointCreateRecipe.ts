@@ -21,7 +21,7 @@ export const createRecipe = async (req: Request, res: Response) => {
 
         const authenticator = new Authenticator();
         const authenticationData = authenticator.getData(token);
-        console.log(authenticationData)
+        
     
         const recipeData = {
             title: req.body.title,
