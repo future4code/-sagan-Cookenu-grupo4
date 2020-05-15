@@ -94,16 +94,22 @@ export class DataBase extends BaseDataBase{
         .join("cookenu_user_follow as uf", "uf.id_user_followed", `${DataBase.USER_TABLE_NAME}.id_user`)
         .join("cookenu_recipe as rc", "rc.id_user_creator", `${DataBase.USER_TABLE_NAME}.id_user` )
         .where({ id_user: id })
+        
+        const feed = []
+
+        for( let data of result) {
+            feed.push({
+                id: data.id_recipe,
+                title: data.title_recipe,
+                description: data.description_recipe,
+                createdAt: moment(data.create_date_recipe).format("DD/MM/YYYY"),
+                userId: data.id_user_creator,
+                userName: data.name_user
+            })
+        }
 
         return result.map((feed => {
-            return {
-                id: feed.id_recipe,
-                title: feed.title_recipe,
-                description: feed.description_recipe,
-                createdAt: moment(feed.create_date_recipe).format("DD/MM/YYYY"),
-                userId: feed.id_user_creator,
-                userName: feed.name_user
-            }
+            return 
         }))
     }
 }
