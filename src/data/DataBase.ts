@@ -4,7 +4,7 @@ import moment from 'moment'
 
 dotenv.config();
 
-export class DataBase extends BaseDataBase{
+export class DataBase extends BaseDataBase {
     private static USER_TABLE_NAME = "cookenu_user";
     private static FOLLOW_TABLE_NAME = "cookenu_user_follow";
 
@@ -27,9 +27,9 @@ export class DataBase extends BaseDataBase{
 
     public async getUserByEmail(email_user: string): Promise<any> {
         const result = await this.getConnection()
-        .select("*")
-        .from(DataBase.USER_TABLE_NAME)
-        .where({email_user});
+            .select("*")
+            .from(DataBase.USER_TABLE_NAME)
+            .where({email_user});
 
         return result[0]
     }
@@ -48,56 +48,54 @@ export class DataBase extends BaseDataBase{
         }
         return user;
     }
+
     public async followUser(
         id_user_follow: string,
-        id_user_followed:string
-
-    ): Promise <void> {
+        id_user_followed: string
+    ): Promise<void> {
         await this.getConnection()
-            .insert({id_user_follow,id_user_followed})
+            .insert({id_user_follow, id_user_followed})
             .into(DataBase.FOLLOW_TABLE_NAME)
     }
 
     public async getUserFollowStatus(
         id_user_follow: string,
-        id_user_followed:string
+        id_user_followed: string
     ): Promise<boolean> {
         const result = await this.getConnection().raw(`
             SELECT * FROM ${DataBase.FOLLOW_TABLE_NAME}
             WHERE id_user_follow = "${id_user_follow}" AND id_user_followed = "${id_user_followed}";
         `)
 
-        if(result[0][0]) {
+        if (result[0][0]) {
             return false
-        }
-        else{
+        } else {
             return true
         }
     }
+
     public async unFollowUser(
         id_user_follow: string,
-        id_user_followed:string
+        id_user_followed: string
     ): Promise<void> {
-         await this.getConnection().raw(`
+        await this.getConnection().raw(`
             DELETE FROM ${DataBase.FOLLOW_TABLE_NAME}
             WHERE id_user_follow = "${id_user_follow}" AND id_user_followed = "${id_user_followed}";
         `)
     }
 
     public async getFeedById(id: string): Promise<any> {
-        const result = await this.getConnection()
-        .select(
-            `${DataBase.USER_TABLE_NAME}.name_user`,
-            `rc.*`
-        )
-        .from(DataBase.USER_TABLE_NAME)
-        .join("cookenu_user_follow as uf", "uf.id_user_followed", `${DataBase.USER_TABLE_NAME}.id_user`)
-        .join("cookenu_recipe as rc", "rc.id_user_creator", `${DataBase.USER_TABLE_NAME}.id_user` )
-        .where({ id_user: id })
-        
+        const result = await this.getConnection().raw(`
+            SELECT us.name_user, rc.*
+            FROM cookenu_user us
+            JOIN cookenu_user_follow uf ON uf.id_user_followed = us.id_user 
+            JOIN cookenu_recipe rc ON us.id_user = rc.id_user_creator
+            WHERE uf.id_user_follow = "${id}";
+        `)
+
         const feed = []
 
-        for( let data of result) {
+        for (let data of result[0]) {
             feed.push({
                 id: data.id_recipe,
                 title: data.title_recipe,
@@ -107,9 +105,6 @@ export class DataBase extends BaseDataBase{
                 userName: data.name_user
             })
         }
-
-        return result.map((feed => {
-            return 
-        }))
+        return feed
     }
 }
