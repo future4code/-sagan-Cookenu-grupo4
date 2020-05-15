@@ -107,15 +107,4 @@ export class DataBase extends BaseDataBase {
         }
         return feed
     }
-
-
-    public async getFollowed(
-        id_user_follow: string,
-    ): Promise<any> {
-        const result = await this.getConnection()
-            .select("*")
-            .from(DataBase.FOLLOW_TABLE_NAME)
-            .where({id_user_follow: id_user_follow})
-        return result
-    }
 }
