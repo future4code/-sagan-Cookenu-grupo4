@@ -5,6 +5,8 @@ import {signup} from "./Endpoints/EndpointSignup";
 import { login } from "./Endpoints/EndpointLogin";
 import {getSelfProfile} from "./Endpoints/EndpointGetSelfProfile";
 import { createRecipe } from "./Endpoints/EndpointCreateRecipe";
+import { getRecipe } from "./Endpoints/EndpointGetRecipe";
+import { getFeed } from "./Endpoints/EndpointGetFeed";
 import {getOtherProfile} from "./Endpoints/EndpointGetOtherProfile";
 import {followUser} from "./Endpoints/EndpointFollowUser";
 import {unFollowUser} from "./Endpoints/EndpointUnfollowUser";
@@ -31,6 +33,10 @@ async function main(): Promise<void> {
     app.get("/user/profile",getSelfProfile)
     app.get("/user/:id", getOtherProfile)
     app.post("/recipe", createRecipe)
+
+    app.get("/recipe/:id", getRecipe)
+    app.get("/user/feed", getFeed)
+
     app.post("/user/follow", followUser)
     app.post("/user/unfollow",unFollowUser)
 }
