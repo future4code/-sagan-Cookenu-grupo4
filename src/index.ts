@@ -30,13 +30,14 @@ async function main(): Promise<void> {
 
     app.post("/signup", signup);
     app.post("/login", login)
+    app.post("/user/follow", followUser)
+    app.post("/user/unfollow",unFollowUser)
+    app.post("/recipe", createRecipe)
+
     app.get("/user/profile",getSelfProfile)
     app.get("/user/feed", getFeed)
     app.get("/user/:id", getOtherProfile)
-    app.post("/recipe", createRecipe)
     app.get("/recipe/:id", getRecipe)
-    app.post("/user/follow", followUser)
-    app.post("/user/unfollow",unFollowUser)
 
 }
 
